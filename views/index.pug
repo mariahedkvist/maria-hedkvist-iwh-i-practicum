@@ -1,0 +1,27 @@
+
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Concerts
+        table
+            thead
+                tr
+                    th Name
+                    th Venue
+                    th Date
+                    th Contacts
+            tbody
+            each concert in data
+                tr
+                    td #{concert.properties.concert_name}
+                    td #{concert.properties.venue}
+                    td #{concert.properties.date}
+                    td
+                        each contact in concert.contacts
+                            p #{contact.properties.firstname} #{contact.properties.lastname}
+        
+        a(href="/update-cobj") Add new

@@ -12,8 +12,32 @@ app.use(express.json());
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
 
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
+app.get('/', async (req, res) => {
+    try {
+        const result = await client.get('v3/objects/p_concerts?limit=10&properties=concert_name,venue,date&associations=contacts');
+        const concerts = result.data.results;
 
-// * Code for Route 1 goes here
+        const concertsWithContacts = await Promise.all(concerts?.map(async (concert) => {
+            const associations = concert.associations?.contacts?.results;
+
+
+            const contactIds = associations?.map(contact => contact.id);
+            const contactsResult = await client.post(`v3/objects/contacts/batch/read`, {
+                properties: ['firstname', 'lastname', 'email'],
+                inputs: contactIds?.map(id => ({ id }))
+            });
+
+            return {
+                ...concert,
+                contacts: contactsResult.data.results || [],
+            };
+        }));
+
+        res.render('index', { title: 'Home | HubSpot APIs', data: concertsWithContacts });
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
