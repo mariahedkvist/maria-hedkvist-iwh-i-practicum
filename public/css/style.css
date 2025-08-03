@@ -7,14 +7,13 @@ body, * {
 }
 
 
-h1 {
+h1, table, a, form {
     margin: 1rem;
 }
 
 table {
     border-collapse: collapse;
     width: 90%;
-    margin: 1rem;
     border: 1px solid #ddd;
 }
 
