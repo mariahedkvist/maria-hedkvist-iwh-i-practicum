@@ -7,6 +7,7 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body    
         h1 Concerts
+        a(href="/update-cobj") Add to this table
         table
             thead
                 tr
@@ -24,4 +25,3 @@ html
                         each contact in concert.contacts
                             p #{contact.properties.firstname} #{contact.properties.lastname}
         
-        a(href="/update-cobj") Add new
