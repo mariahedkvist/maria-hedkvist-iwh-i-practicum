@@ -10,6 +10,16 @@ app.use(express.json());
 
 // * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
+const BASE_URL = 'https://api.hubapi.com/crm/';
+const CONCERT_OBJECT_TYPE_ID = '2-145539806';
+
+const client = axios.create({
+    baseURL: BASE_URL,
+    headers: {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+});
 
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 app.get('/', async (req, res) => {
