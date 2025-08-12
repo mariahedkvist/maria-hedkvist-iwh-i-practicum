@@ -67,12 +67,8 @@ app.post('/update-cobj', async (req, res) => {
 
     try {
         const response = await client.post(`v3/objects/${CONCERT_OBJECT_TYPE_ID}`, newConcert);
-        if (response.status !== 201) {
-            res.redirect('/');
-        }
-        else {
-            res.redirect('/error');
-        }
+        
+        res.redirect('/');
     }
     catch (e) {
         console.error(e);
